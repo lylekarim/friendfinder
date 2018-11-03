@@ -3,13 +3,30 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Tables Page</title>
+  <title>Daters Page</title>
 
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function sum(input) {
+
+      if (toString.call(input) !== "[object Array]")
+        return false;
+
+      var total = 0;
+      for (var i = 0; i < input.length; i++) {
+        if (isNaN(input[i])) {
+          continue;
+        }
+        total += Number(input[i]);
+      }
+      return total;
+    }
+
+  </script>
 
 </head>
 
@@ -35,7 +52,7 @@
         <!-- Current Tables in Use -->
         <div class="card">
           <div class="card-header">
-            <h4>Current Daters</h4>
+            <h4>All Daters</h4>
           </div>
           <div class="card-body">
             <ul id="daterList" class="list-group"></ul>
@@ -45,7 +62,7 @@
         <!-- current dater Card -->
         <div class="card mt-4">
           <div class="card-header">
-            <h4>Current Dater</h4>
+            <h4>Match Quotient View</h4>
           </div>
           <div class="card-body">
             <ul id="currentDaterList" class="list-group"></ul>
@@ -78,7 +95,7 @@
   function runDaterQuery() {
     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
     $.ajax({ url: "/api/daters", method: "GET" })
-      .then(function(daterData) {
+      .then(function (daterData) {
 
         // Here we then log the tableData to console, where it will show up as an object.
         console.log(daterData);
@@ -89,36 +106,100 @@
 
           // Get a reference to the tableList element and populate it with tables
           var daterList = $("#daterList");
+          var currentDaterList = $("#currentDaterList");
 
           // Then display the fields in the HTML (Section Name, Date, URL)
           var listItem = $("<li class='list-group-item mt-4'>");
 
           listItem.append(
             $("<h2>").text("Dater #" + (i + 1)),
-            $("<hr>"),
-           // $("<h2>").text("ID: " + daterData[i].customerID),
+            //$("<hr>"),
+            //$("<h2>").text("ID: " + daterData[i].customerID),
             $("<h2>").text("Name: " + daterData[i].customerName),
             $("<h2>").text("Answers: " + daterData[i].answers),
-            $("<h2>").text("Image: " + daterData[i].customerImage)
+            $("<h2>").text("Image: " + daterData[i].customerImage),
+
           );
 
           daterList.append(listItem);
+
         }
       });
   }
 
-  function runCurrentDaterQuery() {
+  function runMatchQuery() {
 
     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
     $.ajax({ url: "/api/currentDate", method: "GET" })
-      .then(function(currentDate) {
+      .then(function (currentDateData) {
+
+        //returns current date
+        var lastItem = currentDateData.pop();
+
+        //gets last item in current dates array
+        var a = lastItem.answers;
+
+        //for each dater, get answers and compare with var 
+
+        for (var i = 0; i < (currentDateData.length); i++) {
+
+          var b = currentDateData[i].answers;
+          console.log(b);
+
+          console.log("a " + a);
+          console.log("b " + b);
+
+          var x = a.map(function (item, index) {
+            // In this case item correspond to currentValue of array a, 
+            // using index to get value from array b
+            return Math.abs(item - b[index]);
+          })
+
+          var matchy = sum(x);
+          //put the sum from each check into a field on the matchquery object
+          currentDateData[i].matchNumber = matchy;
+
+
+        //  var min = arrayMin(currentDateData, 'matchNumber');
+
+       var min = currentDateData.reduce(function(prev, curr) {
+    return prev.matchNumber < curr.matchNumber ? prev : curr;
+});
+
+          console.log(min);
+
+        }
+//         function arrayMin(arr, key){
+//     var m = -Infinity,
+//         o = null,
+//         cur,
+//         curv,
+//         i;
+//     for(i=0; i<arr.length; i++){
+//         cur = arr[i]
+//         curv = cur[key]
+//         if(curv > m){
+//             m = curv;
+//             o = cur;
+//         }
+//     }
+//     console.log(m);
+//     console.log(o);
+//     return o;
+   
+// }
+
+
+
+
+        //check each dater's score to find the lowest score
 
         // Here we then log the waitlistData to console, where it will show up as an object.
-        console.log(currentDate);
+        //console.log(currentDateData[i].matchNumber);
         console.log("------------------------------------");
 
         // Loop through and display each of the customers
-        for (var i = 0; i < currentDate.length; i++) {
+        for (var i = 0; i < currentDateData.length; i++) {
 
           // Get a reference to the waitList element and populate it with tables
           var currentDaterList = $("#currentDaterList");
@@ -129,10 +210,11 @@
           listItem.append(
             // $("<h2>").text("Current Dater #" + (i + 1)),
             $("<hr>"),
-        
-            $("<h2>").text("Name: " + currentDate[i].customerName),
-            $("<h2>").text("image: " + currentDate[i].customerImage),
-            $("<h2>").text("Answers: " + currentDate[i].answers)
+
+            $("<h2>").text("Name: " + currentDateData[i].customerName),
+            $("<h2>").text("image: " + currentDateData[i].customerImage),
+            $("<h2>").text("Answers: " + currentDateData[i].answers),
+            $("<h2>").text("Match Quotient: " + currentDateData[i].matchNumber)
           );
 
           currentDaterList.append(listItem);
@@ -145,7 +227,7 @@
     alert("Clearing...");
 
     // Clear the tables on the server and then empty the elements on the client
-    $.ajax({ url: "/api/clear", method: "POST" }).then(function() {
+    $.ajax({ url: "/api/clear", method: "POST" }).then(function () {
       $("#currentDaterList").empty();
       $("#daterList").empty();
     });
@@ -157,7 +239,7 @@
   // Run Queries!
   // ==========================================
   runDaterQuery();
-  runCurrentDaterQuery();
+  runMatchQuery();
 
 
 </script>

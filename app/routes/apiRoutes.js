@@ -4,9 +4,23 @@
 // These data sources hold arrays of information on table-data, waitinglist, etc.
 // ===============================================================================
 
-var daterData = require("../data/allDates");
-var currentData = require("../data/currentDate");
-
+var datersData = [
+  {
+    customerName: "Ahmed",
+    imageurl: "000-000-0000",
+    matchNumber: 0,
+    answers:[1,2,3,2,2,3,1,3,2,3],
+   
+  }
+];
+var currentDaterData = [
+  {
+    customerName: "Said Current Date",
+    imageurl: "000-000-0000",
+    matchNumber: 0,
+    answers:[3,2,1,2,1,1,2,3,1,2],
+  }
+  ];
 
 // ===============================================================================
 // ROUTING
@@ -20,11 +34,11 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.get("/api/daters", function(req, res) {
-    res.json(daterData);
+    res.json(datersData);
   });
 
   app.get("/api/currentDate", function(req, res) {
-    res.json(currentData);
+    res.json(currentDaterData);
   });
 
   // API POST Requests
@@ -32,26 +46,26 @@ module.exports = function(app) {
   // In each of the below cases, when a user submits form data (a JSON object)
   // ...the JSON is pushed to the appropriate JavaScript array
   // (ex. User fills out a reservation request... this data is then sent to the server...
-  // Then the server saves the data to the daterData array)
+  // Then the server saves the data to the datersData array)
   // ---------------------------------------------------------------------------
 
   app.post("/api/daters", function(req, res) {
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
+    // Note the code here. Our "server" will respond to requests and let users know if they have a match or not.
     // It will do this by sending out the value "true" have a table
     // req.body is available since we're using the body parsing middleware
 
-    currentData.push(req.body);
-    daterData.push(req.body);
+   // if (daterData.length < 5) {
 
-    // if (daterData.length < 5) {
-    //   daterData.push(req.body);
-    //   res.json(true);
-    // }
-    // else {
-    //   currentData.push(req.body);
-    //   res.json(false);
-    // }
+      datersData.push(req.body);
+      res.json(true);
+   // }
+  //  else {
+      currentDaterData.push(req.body);
+      res.json(false);
+  //  }
   });
+
+
 
   // ---------------------------------------------------------------------------
   // I added this below code so you could clear out the table while working with the functionality.
@@ -59,8 +73,8 @@ module.exports = function(app) {
 
   app.post("/api/clear", function(req, res) {
     // Empty out the arrays of data
-    daterData.length = [];
-    currentData.length = [];
+    datersData.length = [];
+    currentDaterData.length = [];
 
     res.json({ ok: true });
   });

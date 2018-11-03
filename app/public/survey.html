@@ -119,7 +119,7 @@
                                 </select>
 
                                 <h3><strong>Question 6</strong></h3>
-                                <h4>It is often difficult for you to relate to other people’s feelings.</h4>
+                                <h4>It is often difficult for you to relate to other people’s pets.</h4>
                                 <select class="chosen-select" id="q6">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
@@ -193,7 +193,7 @@
             <div class="container">
                 <p>
                     <a href="/api/daters">API Daters Link</a> |
-          <a href="/api/currentDate">API current dater info</a>
+                    <a href="/api/currentDate">API current dater info</a>
             </div>
         </footer>
 
@@ -220,12 +220,20 @@
         var answers = $.map(options, function (option) {
             return option.value;
         });
-       
+
+        var currentDater = {
+            customerName: $("#dater-name").val().trim(),
+            customerImage: $("#dater-image").val().trim(),
+            answers: answers
+        };
+
         var dater = {
             customerName: $("#dater-name").val().trim(),
             customerImage: $("#dater-image").val().trim(),
             answers: answers
         };
+
+       
         console.log(dater);
 
         $.post("/api/daters", dater)
@@ -238,16 +246,13 @@
                     } else {
                         alert("Sorry. No match for you.");
                     }
-        //             $("#reserve-name").val("");
-        // $("#dater-name").val("");
-        // $("#dater-image").val("");
-        // $("#answers").val("");
+                    //             $("#reserve-name").val("");
+                    // $("#dater-name").val("");
+                    // $("#dater-image").val("");
+                    // $("#answers").val("");
                 })
-
             });
-
-    });
-  
-
+   
+});
 
 </script>
