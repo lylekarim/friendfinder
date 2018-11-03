@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Friend Finder - the Most important questions you will evee answer</title>
+    <title>Friend Finder - the Most important questions you will ever answer</title>
 
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -26,7 +26,7 @@
             <div class="text-center">
                 <a href="/daters">
                     <button class="btn btn-lg btn-primary">
-                        <span class="fa fa-list-alt"></span> View Daters</button>
+                        <span class="fa fa-list-alt"></span> View Friends</button>
                 </a>
                 <a href="/">
                     <button class="btn btn-lg btn-default">
@@ -56,7 +56,7 @@
                                 <h4>Name (Required)</h4>
                                 <input type="text" id="dater-name" class="form-control" required="">
 
-                                <h4>Link to Photo Image (Required)</h4>
+                                <h4>Link to Photo Image </h4>
                                 <input type="text" id="dater-image" class="form-control" required="">
 
                                 <hr>
@@ -179,7 +179,8 @@
 
                                 <!-- Submit Button -->
 
-                                <button type="submit" class="btn btn-primary submit" id="submit">Submit</button>
+                                <button type="submit" class="btn btn-primary submit" id="submit" data-toggle="modal"
+                                    data-target="#exampleModal">Submit</button>
 
                                 <hr>
                         </form>
@@ -192,14 +193,38 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    <a href="/api/daters">API Daters Link</a> |
-                    <a href="/api/currentDate">API current dater info</a>
+                    <a href="/api/daters">API Friends Link</a> |
+
             </div>
         </footer>
 
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="dater-match" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Here's Your New Best Friend!!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="dater-match-name" class="modal-body">
+            
+                </div>
+                <div id="dater-match-image" class="modal-body">
+                 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
@@ -221,38 +246,44 @@
             return option.value;
         });
 
-        var currentDater = {
-            customerName: $("#dater-name").val().trim(),
-            customerImage: $("#dater-image").val().trim(),
-            answers: answers
-        };
-
         var dater = {
             customerName: $("#dater-name").val().trim(),
             customerImage: $("#dater-image").val().trim(),
             answers: answers
         };
 
-       
+
         console.log(dater);
 
         $.post("/api/daters", dater)
             .then(function (data) {
                 console.log(data);
-                $.get("/api/daters", function (data) {
-                    // if(data[1].length<1){
-                    if (data) {
-                        alert("this is when the modal will show your match!");
-                    } else {
-                        alert("Sorry. No match for you.");
-                    }
-                    //             $("#reserve-name").val("");
-                    // $("#dater-name").val("");
-                    // $("#dater-image").val("");
-                    // $("#answers").val("");
-                })
+                if (data) {
+
+
+                    console.log(`Match: ${data.customerName}
+                    ---------------
+                    ${data.imageurl}
+                    ----------------`);
+                      $("#dater-match-name").text(data.customerName);
+                        $("#dater-match-image").attr("src", data.customerImage);
+                        $("#dater-match").modal("toggle");
+           
+
+                } else {
+                    alert("Sorry. No friends for you.");
+                }
+
+                // $("#dater-name").val("");
+                // $("#dater-image").val("");
+                // $("#answers").val("");
+
+
+
             });
-   
-});
+
+    });
+
+
 
 </script>

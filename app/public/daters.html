@@ -3,30 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Daters Page</title>
+  <title>Friends Page</title>
 
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script>
-    function sum(input) {
-
-      if (toString.call(input) !== "[object Array]")
-        return false;
-
-      var total = 0;
-      for (var i = 0; i < input.length; i++) {
-        if (isNaN(input[i])) {
-          continue;
-        }
-        total += Number(input[i]);
-      }
-      return total;
-    }
-
-  </script>
+  
 
 </head>
 
@@ -37,7 +21,7 @@
     <div class="jumbotron">
       <h1 class="text-center"><span class="fa fa-fire"></span> Hot Date App</h1>
       <hr>
-      <h2 class="text-center">All Daters and Current Dater List</h2>
+      <h2 class="text-center">All Friends List</h2>
       <br>
 
       <div class="text-center">
@@ -52,22 +36,14 @@
         <!-- Current Tables in Use -->
         <div class="card">
           <div class="card-header">
-            <h4>All Daters</h4>
+            <h4>All Friends</h4>
           </div>
           <div class="card-body">
             <ul id="daterList" class="list-group"></ul>
           </div>
         </div>
 
-        <!-- current dater Card -->
-        <div class="card mt-4">
-          <div class="card-header">
-            <h4>Match Quotient View</h4>
-          </div>
-          <div class="card-body">
-            <ul id="currentDaterList" class="list-group"></ul>
-          </div>
-        </div>
+      
       </div>
     </div>
 
@@ -75,8 +51,7 @@
     <footer class="footer mt-4">
       <div class="container">
         <p>Control Panel</p>
-        <p><a href="#" id="clear">Clear Table</a> | <a href="/api/daters">API Daters Link</a> | <a href="/api/currentDate">API
-            Current Dater Data</a>
+        <p><a href="#" id="clear">Clear Table</a> | <a href="/api/daters">API Friends Link</a>
       </div>
     </footer>
 
@@ -106,8 +81,7 @@
 
           // Get a reference to the tableList element and populate it with tables
           var daterList = $("#daterList");
-          var currentDaterList = $("#currentDaterList");
-
+        
           // Then display the fields in the HTML (Section Name, Date, URL)
           var listItem = $("<li class='list-group-item mt-4'>");
 
@@ -127,100 +101,100 @@
       });
   }
 
-  function runMatchQuery() {
+//   function runMatchQuery() {
 
-    // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.ajax({ url: "/api/currentDate", method: "GET" })
-      .then(function (currentDateData) {
+//     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+//     $.ajax({ url: "/api/currentDate", method: "GET" })
+//       .then(function (currentDateData) {
 
-        //returns current date
-        var lastItem = currentDateData.pop();
+//         //returns current date
+//         var lastItem = currentDateData.pop();
 
-        //gets last item in current dates array
-        var a = lastItem.answers;
+//         //gets last item in current dates array
+//         var a = lastItem.answers;
 
-        //for each dater, get answers and compare with var 
+//         //for each dater, get answers and compare with var 
 
-        for (var i = 0; i < (currentDateData.length); i++) {
+//         for (var i = 0; i < (currentDateData.length); i++) {
 
-          var b = currentDateData[i].answers;
-          console.log(b);
+//           var b = currentDateData[i].answers;
+//           console.log(b);
 
-          console.log("a " + a);
-          console.log("b " + b);
+//           console.log("a " + a);
+//           console.log("b " + b);
 
-          var x = a.map(function (item, index) {
-            // In this case item correspond to currentValue of array a, 
-            // using index to get value from array b
-            return Math.abs(item - b[index]);
-          })
+//           var x = a.map(function (item, index) {
+//             // In this case item correspond to currentValue of array a, 
+//             // using index to get value from array b
+//             return Math.abs(item - b[index]);
+//           })
 
-          var matchy = sum(x);
-          //put the sum from each check into a field on the matchquery object
-          currentDateData[i].matchNumber = matchy;
+//           var matchy = sum(x);
+//           //put the sum from each check into a field on the matchquery object
+//           currentDateData[i].matchNumber = matchy;
 
 
-        //  var min = arrayMin(currentDateData, 'matchNumber');
+//         //  var min = arrayMin(currentDateData, 'matchNumber');
 
-       var min = currentDateData.reduce(function(prev, curr) {
-    return prev.matchNumber < curr.matchNumber ? prev : curr;
-});
+//        var min = currentDateData.reduce(function(prev, curr) {
+//     return prev.matchNumber < curr.matchNumber ? prev : curr;
+// });
 
-          console.log(min);
+//           console.log(min);
 
-        }
-//         function arrayMin(arr, key){
-//     var m = -Infinity,
-//         o = null,
-//         cur,
-//         curv,
-//         i;
-//     for(i=0; i<arr.length; i++){
-//         cur = arr[i]
-//         curv = cur[key]
-//         if(curv > m){
-//             m = curv;
-//             o = cur;
 //         }
-//     }
-//     console.log(m);
-//     console.log(o);
-//     return o;
+// //         function arrayMin(arr, key){
+// //     var m = -Infinity,
+// //         o = null,
+// //         cur,
+// //         curv,
+// //         i;
+// //     for(i=0; i<arr.length; i++){
+// //         cur = arr[i]
+// //         curv = cur[key]
+// //         if(curv > m){
+// //             m = curv;
+// //             o = cur;
+// //         }
+// //     }
+// //     console.log(m);
+// //     console.log(o);
+// //     return o;
    
-// }
+// // }
 
 
 
 
-        //check each dater's score to find the lowest score
+//         //check each dater's score to find the lowest score
 
-        // Here we then log the waitlistData to console, where it will show up as an object.
-        //console.log(currentDateData[i].matchNumber);
-        console.log("------------------------------------");
+//         // Here we then log the waitlistData to console, where it will show up as an object.
+//         //console.log(currentDateData[i].matchNumber);
+//         console.log("------------------------------------");
 
-        // Loop through and display each of the customers
-        for (var i = 0; i < currentDateData.length; i++) {
+//         // Loop through and display each of the customers
+//         for (var i = 0; i < currentDateData.length; i++) {
 
-          // Get a reference to the waitList element and populate it with tables
-          var currentDaterList = $("#currentDaterList");
+//           // Get a reference to the waitList element and populate it with tables
+//           var currentDaterList = $("#currentDaterList");
 
-          // Then display the fields in the HTML (Section Name, Date, URL)
-          var listItem = $("<li class='list-group-item mt-4'>");
+//           // Then display the fields in the HTML (Section Name, Date, URL)
+//           var listItem = $("<li class='list-group-item mt-4'>");
 
-          listItem.append(
-            // $("<h2>").text("Current Dater #" + (i + 1)),
-            $("<hr>"),
+//           listItem.append(
+//             // $("<h2>").text("Current Dater #" + (i + 1)),
+//             $("<hr>"),
 
-            $("<h2>").text("Name: " + currentDateData[i].customerName),
-            $("<h2>").text("image: " + currentDateData[i].customerImage),
-            $("<h2>").text("Answers: " + currentDateData[i].answers),
-            $("<h2>").text("Match Quotient: " + currentDateData[i].matchNumber)
-          );
+//             $("<h2>").text("Name: " + currentDateData[i].customerName),
+//             $("<h2>").text("image: " + currentDateData[i].customerImage),
+//             $("<h2>").text("Answers: " + currentDateData[i].answers),
+//             $("<h2>").text("Match Quotient: " + currentDateData[i].matchNumber)
+//           );
 
-          currentDaterList.append(listItem);
-        }
-      });
-  }
+//           currentDaterList.append(listItem);
+//         }
+//       });
+//   }
 
   // This function resets all of the data in our tables. This is intended to let you restart a demo.
   function clearTable() {
@@ -239,7 +213,7 @@
   // Run Queries!
   // ==========================================
   runDaterQuery();
-  runMatchQuery();
+
 
 
 </script>
