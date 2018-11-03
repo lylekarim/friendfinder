@@ -106,7 +106,7 @@ module.exports = function(app) {
    app.post('/api/clear', function(req, res) {
       // Empty out the arrays of data
       datersData.length = [];
-      currentDaterData.length = [];
+     // currentDaterData.length = [];
 
       res.json({ ok: true });
    });

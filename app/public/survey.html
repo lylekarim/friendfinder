@@ -63,7 +63,7 @@
 
                                 <h3><strong>Question 1</strong></h3>
                                 <h4>Your mind is always buzzing with odd sounds.</h4>
-                                <select class="chosen-select" id="q1">
+                                <select class="chosen-select form-control-lg  mb-3" id="q1">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -74,7 +74,7 @@
 
                                 <h3><strong>Question 2</strong></h3>
                                 <h4>Generally speaking, you rely more on the subway than the bus.</h4>
-                                <select class="chosen-select" id="q2">
+                                <select class="chosen-select form-control-lg  mb-3" id="q2">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -85,7 +85,7 @@
 
                                 <h3><strong>Question 3</strong></h3>
                                 <h4>You find it easy to eat popcorn even when you are not hungry.</h4>
-                                <select class="chosen-select" id="q3">
+                                <select class="chosen-select form-control-lg  mb-3" id="q3">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -97,7 +97,7 @@
 
                                 <h3><strong>Question 4</strong></h3>
                                 <h4>You rarely do aything.</h4>
-                                <select class="chosen-select" id="q4">
+                                <select class="chosen-select form-control-lg  mb-3" id="q4">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -109,7 +109,7 @@
 
                                 <h3><strong>Question 5</strong></h3>
                                 <h4>People can rarely upset your cat.</h4>
-                                <select class="chosen-select" id="q5">
+                                <select class="chosen-select form-control-lg  mb-3" id="q5">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -120,7 +120,7 @@
 
                                 <h3><strong>Question 6</strong></h3>
                                 <h4>It is often difficult for you to relate to other people’s pets.</h4>
-                                <select class="chosen-select" id="q6">
+                                <select class="chosen-select form-control-lg  mb-3" id="q6">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -132,7 +132,7 @@
 
                                 <h3><strong>Question 7</strong></h3>
                                 <h4>In a discussion, truth should be more truthy.</h4>
-                                <select class="chosen-select" id="q7">
+                                <select class="chosen-select form-control-lg  mb-3" id="q7">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -143,7 +143,7 @@
 
                                 <h3><strong>Question 8</strong></h3>
                                 <h4>You rarely get carried away by strong winds.</h4>
-                                <select class="chosen-select" id="q8">
+                                <select class="chosen-select form-control-lg  mb-3" id="q8">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -154,7 +154,7 @@
 
                                 <h3><strong>Question 9</strong></h3>
                                 <h4>You think that everyone’s views should be considered as not their fault.</h4>
-                                <select class="chosen-select" id="q9">
+                                <select class="chosen-select form-control-lg  mb-3" id="q9">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -165,7 +165,7 @@
 
                                 <h3><strong>Question 10</strong></h3>
                                 <h4>You feel more energetic after spending time in orbit.</h4>
-                                <select class="chosen-select" id="q10">
+                                <select class="chosen-select form-control-lg  mb-3" id="q10">
                                     <option value=""></option>
                                     <option value="1">1 (Strongly Disagree)</option>
                                     <option value="2">2</option>
@@ -235,55 +235,33 @@
     // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
     // Our api recognizes the route (/api/daters)... and then runs the associated code (found in api-routes.js).
     // In this case the associated code "saves" the data to the datedata.js file or waitinglist-data.js file
-
-
-
     $("#submit").on("click", function (event) {
         event.preventDefault();
         var options = $('.chosen-select option:selected');
-
         var answers = $.map(options, function (option) {
             return option.value;
         });
-
         var dater = {
             customerName: $("#dater-name").val().trim(),
             customerImage: $("#dater-image").val().trim(),
             answers: answers
         };
-
-
         console.log(dater);
-
         $.post("/api/daters", dater)
             .then(function (data) {
                 console.log(data);
                 if (data) {
-
-
-                    console.log(`Match: ${data.customerName}
-                    ---------------
-                    ${data.imageurl}
-                    ----------------`);
+                   
                       $("#dater-match-name").text(data.customerName);
                         $("#dater-match-image").attr("src", data.customerImage);
                         $("#dater-match").modal("toggle");
            
-
                 } else {
                     alert("Sorry. No friends for you.");
                 }
-
                 // $("#dater-name").val("");
                 // $("#dater-image").val("");
                 // $("#answers").val("");
-
-
-
             });
-
     });
-
-
-
 </script>

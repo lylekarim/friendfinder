@@ -1,6 +1,5 @@
 
 
-
   //current dater js
 
   // ===============================================================================
@@ -11,15 +10,14 @@
 // ===============================================================================
 
 var currentDaterArray = [
-  {
-    customerName: "Said Current Date",
-    imageurl: "000-000-0000",
-    matchNumber: 0,
-    answers:[3,2,1,2,1,1,2,3,1,2],
-  }
-  ];
-  
-  
-  // Note how we export the array. This makes it accessible to other files using require.
-  module.exports = currentDaterArray;
-  
+    {
+      customerName: "Said Current Date",
+      imageurl: "000-000-0000",
+      matchNumber: 0,
+      answers:[3,2,1,2,1,1,2,3,1,2],
+    }
+    ];
+    
+    
+    // Note how we export the array. This makes it accessible to other files using require.
+    module.exports = currentDaterArray;
