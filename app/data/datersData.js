@@ -9,7 +9,7 @@ var daterArray = [
     
   {
     customerName: "Chowder",
-    imageurl: "images/chowder.png",
+    imageurl: "https://vignette.wikia.nocookie.net/cartoonica/images/2/24/Chowder-character.jpg/revision/latest/scale-to-width-down/250?cb=20110423064440",
     matchNumber: 0,
     answers:[1,2,3,2,2,3,1,3,2,3],
    
