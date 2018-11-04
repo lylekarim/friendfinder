@@ -6,7 +6,6 @@ Time to address that friend-less feeling. Take a quick survey and let the Friend
 
 ## Usage
 
-![screenshot 2018-11-03](https://cloud.githubusercontent.com/assets/21274043/25552473/a3ceca2c-2c4f-11e7-8a2b-223dd9afd040.png)
 
 To use our web service, go to the homepage above and click on 'take the survey'. Immediately after submitting the survey, your new best friend will pop up. Click on the API link along the bottom and  you can access the whole friend database. 
 
