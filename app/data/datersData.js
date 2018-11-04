@@ -23,14 +23,14 @@ var daterArray = [
   },
   {
     customerName: "Mung Daal",
-    imageurl: "images/mung.mng",
+    imageurl: "images/mung.png",
     matchNumber: 0,
     answers:[1,2,3,2,2,3,1,3,2,3],
    
   },
   {
     customerName: "Schnitzel",
-    imageurl: "images/schnitzel.mng",
+    imageurl: "images/schnitzel.png",
     matchNumber: 0,
     answers:[1,2,3,2,2,3,1,3,2,3],
    
